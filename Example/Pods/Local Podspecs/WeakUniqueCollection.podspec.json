@@ -1,0 +1,22 @@
+{
+  "name": "WeakUniqueCollection",
+  "version": "0.1.0",
+  "summary": "A short description of WeakUniqueCollection.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/sibext/WeakUniqueCollection",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Artyom Gladkov": "gladkov@sibext.com"
+  },
+  "source": {
+    "git": "https://github.com/sibext/WeakUniqueCollection.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "Classes/**/*"
+}

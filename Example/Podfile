@@ -1,0 +1,7 @@
+use_frameworks!
+target 'WeakUniqueCollection_Tests' do
+  pod 'WeakUniqueCollection', :path => '../'
+  
+  pod 'Specta'
+  pod 'Expecta'
+end

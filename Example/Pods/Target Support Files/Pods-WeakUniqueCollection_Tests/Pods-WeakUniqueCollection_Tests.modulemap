@@ -1,0 +1,6 @@
+framework module Pods_WeakUniqueCollection_Tests {
+  umbrella header "Pods-WeakUniqueCollection_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}

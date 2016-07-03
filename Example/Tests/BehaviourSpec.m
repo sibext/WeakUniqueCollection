@@ -62,7 +62,7 @@ describe(@"Collection", ^{
             [collection addObject:obj];
         }
         expect(collection).to.haveCountOf(5);
-        [collection removeAllObject];
+        [collection removeAllObjects];
         expect(collection).to.haveCountOf(0);
     });
 });

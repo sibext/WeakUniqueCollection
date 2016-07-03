@@ -51,7 +51,7 @@
     });
 }
 
-- (void)removeAllObject
+- (void)removeAllObjects
 {
     dispatch_barrier_async(_accessQueue, ^{
         NSUInteger count = self.objectPointers.count;

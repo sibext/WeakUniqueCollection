@@ -14,7 +14,7 @@
 
 - (void)addObject:(ObjectType)object;
 - (void)removeObject:(ObjectType)object;
-- (void)removeAllObject;
+- (void)removeAllObjects;
 
 - (ObjectType)objectAtIndexedSubscript:(NSUInteger)idx;
 - (void)setObject:(ObjectType)obj atIndexedSubscript:(NSUInteger)idx;

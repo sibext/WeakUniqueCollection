@@ -84,7 +84,10 @@
 - (void)setObject:(id)obj atIndexedSubscript:(NSUInteger)idx
 {
     dispatch_barrier_async(_accessQueue, ^{
-        [self.objectPointers insertPointer:(__bridge void * _Nullable)(obj) atIndex:idx];
+        NSArray *allPointers = self.objectPointers.allObjects;
+        if (![allPointers containsObject:obj]) {
+            [self.objectPointers insertPointer:(__bridge void * _Nullable)(obj) atIndex:idx];
+        }
     });
 }
 

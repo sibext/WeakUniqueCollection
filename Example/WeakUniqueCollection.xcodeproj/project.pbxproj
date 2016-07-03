@@ -11,8 +11,10 @@
 		6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
-		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		910470BD23E6024465B73169 /* Pods_WeakUniqueCollection_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22161A4789120A561C7B9E22 /* Pods_WeakUniqueCollection_Tests.framework */; };
+		92AD02FE1D2422CE00313D59 /* UniquenessSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 92AD02FD1D2422CE00313D59 /* UniquenessSpec.m */; };
+		92AD03001D2839F600313D59 /* BehaviourSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 92AD02FF1D2839F600313D59 /* BehaviourSpec.m */; };
+		92AD03031D2840D200313D59 /* TestObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 92AD03021D2840D200313D59 /* TestObject.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,10 +27,13 @@
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		6003F5B7195388D20070C39A /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
 		6003F5B9195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		6003F5BB195388D20070C39A /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		659153CDEE16B1B118EC66D0 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		6EABE7FFC3FCC46EF223B1A8 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		92AD02FD1D2422CE00313D59 /* UniquenessSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UniquenessSpec.m; sourceTree = "<group>"; };
+		92AD02FF1D2839F600313D59 /* BehaviourSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BehaviourSpec.m; sourceTree = "<group>"; };
+		92AD03011D2840D200313D59 /* TestObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestObject.h; sourceTree = "<group>"; };
+		92AD03021D2840D200313D59 /* TestObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestObject.m; sourceTree = "<group>"; };
 		9AADAB95DF1A6A7C148360D8 /* Pods-WeakUniqueCollection_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeakUniqueCollection_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeakUniqueCollection_Tests/Pods-WeakUniqueCollection_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		E9ACA709345DC096560C1296 /* WeakUniqueCollection.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = WeakUniqueCollection.podspec; path = ../WeakUniqueCollection.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -62,7 +67,6 @@
 			children = (
 				60FF7A9C1954A5C5007DD14C /* Podspec Metadata */,
 				6003F5B5195388D20070C39A /* Tests */,
-				6003F58C195388D20070C39A /* Frameworks */,
 				6003F58B195388D20070C39A /* Products */,
 				08C45A9705DCF6BC9C3AE118 /* Pods */,
 			);
@@ -86,12 +90,17 @@
 				22161A4789120A561C7B9E22 /* Pods_WeakUniqueCollection_Tests.framework */,
 			);
 			name = Frameworks;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		6003F5B5195388D20070C39A /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				6003F5BB195388D20070C39A /* Tests.m */,
+				92AD02FD1D2422CE00313D59 /* UniquenessSpec.m */,
+				92AD02FF1D2839F600313D59 /* BehaviourSpec.m */,
+				92AD03011D2840D200313D59 /* TestObject.h */,
+				92AD03021D2840D200313D59 /* TestObject.m */,
+				6003F58C195388D20070C39A /* Frameworks */,
 				6003F5B6195388D20070C39A /* Supporting Files */,
 			);
 			path = Tests;
@@ -237,7 +246,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6003F5BC195388D20070C39A /* Tests.m in Sources */,
+				92AD03001D2839F600313D59 /* BehaviourSpec.m in Sources */,
+				92AD03031D2840D200313D59 /* TestObject.m in Sources */,
+				92AD02FE1D2422CE00313D59 /* UniquenessSpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

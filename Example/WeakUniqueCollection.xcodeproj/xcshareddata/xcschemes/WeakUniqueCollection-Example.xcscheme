@@ -20,6 +20,20 @@
                ReferencedContainer = "container:WeakUniqueCollection.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "6003F5AD195388D20070C39A"
+               BuildableName = "WeakUniqueCollection_Tests.xctest"
+               BlueprintName = "WeakUniqueCollection_Tests"
+               ReferencedContainer = "container:WeakUniqueCollection.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction

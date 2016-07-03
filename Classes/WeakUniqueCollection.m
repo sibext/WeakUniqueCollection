@@ -22,7 +22,7 @@
 - (instancetype)init
 {
     if (self = [super init]) {
-        _accessQueue = dispatch_queue_create("", DISPATCH_QUEUE_CONCURRENT);
+        _accessQueue = dispatch_queue_create("WEAKUNIQUECOLLECTION_QUEUE", DISPATCH_QUEUE_CONCURRENT);
         _objectPointers = [NSPointerArray weakObjectsPointerArray];
     }
     return self;

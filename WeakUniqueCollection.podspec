@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'WeakUniqueCollection'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of WeakUniqueCollection.'
+  s.summary          = 'Objective-C collection class that stores weak references to the objects and maintains uniqueness and thread safety.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -17,9 +17,9 @@ Pod::Spec.new do |s|
 #   * Write the description between the DESC delimiters below.
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
-  s.description      = <<-DESC
-TODO: Add long description of the pod here.
-                       DESC
+  s.description      = 'WeakUniqueCollection class has behavior similar to NSMutableSet (in terms of uniqueness of objects inside it)' \
+                       'but it stores weak references and thread-safe. It could be very useful for implementation of'\
+                       'multi-cast delegates and observers.'
 
   s.homepage         = 'https://github.com/sibext/WeakUniqueCollection'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }

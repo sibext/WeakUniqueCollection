@@ -12,7 +12,7 @@
 
 @property(readonly)NSUInteger count;
 
-- (BOOL)addObject:(ObjectType)object;
+- (void)addObject:(ObjectType)object;
 - (void)removeObject:(ObjectType)object;
 - (void)removeAllObject;
 

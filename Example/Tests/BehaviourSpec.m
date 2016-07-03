@@ -1,0 +1,72 @@
+//
+//  BehaviourSpec.m
+//  WeakUniqueCollection
+//
+//  Created by Artem Gladkov on 03.07.16.
+//  Copyright © 2016 Artyom Gladkov. All rights reserved.
+//
+
+#import <WeakUniqueCollection/WeakUniqueCollection-umbrella.h>
+#import "TestObject.h"
+
+SpecBegin(Behaviour)
+
+describe(@"Collection", ^{
+    WeakUniqueCollection<TestObject *> * __block collection;
+    
+    beforeEach(^{
+        collection = [[WeakUniqueCollection alloc]init];
+    });
+    
+    it(@"adds new object", ^{
+        TestObject *obj = [[TestObject alloc] initWithName:@"Object"];
+        [collection addObject:obj];
+        //TODO: use expecta's .contain after implementation of NSFastEnumeration
+        id firstObject = collection[0];
+        expect(firstObject).to.beIdenticalTo(obj);
+    });
+    
+    it(@"is not adding duplicates", ^{
+        TestObject *obj = [[TestObject alloc] initWithName:@"Object"];
+        [collection addObject:obj];
+        NSUInteger count1 = collection.count;
+        [collection addObject:obj];
+        expect(collection).to.haveCountOf(count1);
+    });
+    
+    it (@"returns objects", ^{
+        TestObject *obj0 = [[TestObject alloc] initWithName:@"Object1"];
+        [collection addObject:obj0];
+        TestObject *obj1 = [[TestObject alloc] initWithName:@"Object2"];
+        [collection addObject:obj1];
+        TestObject *obj2 = [[TestObject alloc] initWithName:@"Object3"];
+        [collection addObject:obj2];
+        id returnedObject = collection[1];
+        expect(returnedObject).to.beIdenticalTo(obj1);
+    });
+    
+    it(@"removes object", ^{
+        TestObject *obj = [[TestObject alloc] initWithName:@"Anyone"];
+        [collection addObject:obj];
+        id firstObject = collection[0];
+        expect(firstObject).to.beIdenticalTo(obj);
+        [collection removeObject:obj];
+        expect(collection).to.haveCountOf(0);
+    });
+    
+    it (@"removes all objects", ^{
+        NSUInteger count = 5;
+        for (NSUInteger i = 0; i < count; i++) {
+            NSString *name = [NSString stringWithFormat:@"Object %ld", (long)i];
+            TestObject *obj = [[TestObject alloc] initWithName:name];
+            [collection addObject:obj];
+        }
+        expect(collection).to.haveCountOf(5);
+        [collection removeAllObject];
+        expect(collection).to.haveCountOf(0);
+    });
+});
+
+SpecEnd
+
+

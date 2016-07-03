@@ -10,6 +10,7 @@
 
 @interface WeakUniqueCollection ()
 
+@property(nonatomic)dispatch_queue_t accessQueue;
 @property NSPointerArray *objectPointers;
 
 @end
@@ -21,6 +22,7 @@
 - (instancetype)init
 {
     if (self = [super init]) {
+        _accessQueue = dispatch_queue_create("", DISPATCH_QUEUE_CONCURRENT);
         _objectPointers = [NSPointerArray weakObjectsPointerArray];
     }
     return self;
@@ -28,48 +30,62 @@
 
 #pragma mark - Public
 
-- (BOOL)addObject:(id)object
+- (void)addObject:(id)object
 {
-    NSArray *allPointers = self.objectPointers.allObjects;
-    if (![allPointers containsObject:object]) {
-        [self.objectPointers addPointer:(__bridge void * _Nullable)(object)];
-        return YES;
-    }
-    return NO;
+    dispatch_barrier_async(_accessQueue, ^{
+        NSArray *allPointers = self.objectPointers.allObjects;
+        if (![allPointers containsObject:object]) {
+            [self.objectPointers addPointer:(__bridge void * _Nullable)(object)];
+        }
+    });
 }
 
 - (void)removeObject:(id)object
 {
-    NSArray *allPointers = self.objectPointers.allObjects;
-    NSUInteger index = [allPointers indexOfObjectIdenticalTo:object];
-    if (index != NSNotFound) {
-        [self.objectPointers removePointerAtIndex:index];
-    }
+    dispatch_barrier_async(_accessQueue, ^{
+        NSArray *allPointers = self.objectPointers.allObjects;
+        NSUInteger index = [allPointers indexOfObjectIdenticalTo:object];
+        if (index != NSNotFound) {
+            [self.objectPointers removePointerAtIndex:index];
+        }
+    });
 }
 
 - (void)removeAllObject
 {
-    NSUInteger count = self.objectPointers.count;
-    for (NSUInteger i = 0; i < count; i++) {
-        [self.objectPointers removePointerAtIndex:0];
-    }
+    dispatch_barrier_async(_accessQueue, ^{
+        NSUInteger count = self.objectPointers.count;
+        for (NSUInteger i = 0; i < count; i++) {
+            [self.objectPointers removePointerAtIndex:0];
+        }
+    });
 }
 
 - (NSUInteger)count
 {
-    return self.objectPointers.count;
+    NSUInteger __block count = 0;
+    dispatch_sync(_accessQueue, ^{
+        count = self.objectPointers.count;
+    });
+    return count;
 }
 
 #pragma mark - Subscription
 
 - (id)objectAtIndexedSubscript:(NSUInteger)idx
 {
-    return [self.objectPointers pointerAtIndex:idx];
+    id __block obj;
+    dispatch_sync(_accessQueue, ^{
+        obj = [self.objectPointers pointerAtIndex:idx];
+    });
+    return obj;
 }
 
 - (void)setObject:(id)obj atIndexedSubscript:(NSUInteger)idx
 {
-    [self.objectPointers insertPointer:(__bridge void * _Nullable)(obj) atIndex:idx];
+    dispatch_barrier_async(_accessQueue, ^{
+        [self.objectPointers insertPointer:(__bridge void * _Nullable)(obj) atIndex:idx];
+    });
 }
 
 @end

@@ -1,0 +1,5 @@
+import "./Version_management"
+
+default_platform :ios
+
+ENV[PROJECT_FILE_NAME_ENV_VARIABLE] = "_Pods.xcodeproj"

@@ -1,0 +1,69 @@
+PROJECT_FILE_NAME_ENV_VARIABLE = "PROJECT_FILE_NAME"
+platform :ios do
+
+  before_all do |lane|
+    ensure_git_status_clean
+  end	
+
+  desc "Patch release"
+  lane :patch do
+    increment_version_number(
+    	bump_type: "patch",
+      	xcodeproj: ENV[PROJECT_FILE_NAME_ENV_VARIABLE]
+  	)
+    increment_build_number(
+      	build_number: 1,
+      	xcodeproj: ENV[PROJECT_FILE_NAME_ENV_VARIABLE]
+    )
+    commit_tag_push(
+    	version: lane_context[SharedValues::VERSION_NUMBER]
+    )  
+  end
+
+  desc "Minor release"
+  lane :minor do
+    increment_version_number(
+    	bump_type: "minor",
+      	xcodeproj: ENV[PROJECT_FILE_NAME_ENV_VARIABLE]  
+    )
+    increment_build_number(
+      	build_number: 1,
+      	xcodeproj: ENV[PROJECT_FILE_NAME_ENV_VARIABLE]
+    )
+    commit_tag_push(
+    	version: lane_context[SharedValues::VERSION_NUMBER]
+  	)
+  end
+
+  desc "Major release"
+  lane :major do
+    increment_version_number(
+    	bump_type: "major",
+      	xcodeproj: ENV[PROJECT_FILE_NAME_ENV_VARIABLE]
+  	)
+    increment_build_number(
+      	build_number: 1,
+      	xcodeproj: ENV[PROJECT_FILE_NAME_ENV_VARIABLE]
+    )
+    commit_tag_push(
+    	version: lane_context[SharedValues::VERSION_NUMBER]
+  	)
+  end
+
+  private_lane :commit_tag_push do |options|
+    if UI.confirm("Should we commit this deal?")
+    	commit_version_bump(
+    		message: "Bump version to #{options[:version]}",
+        	xcodeproj: ENV[PROJECT_FILE_NAME_ENV_VARIABLE]
+    	)
+    	add_git_tag(
+    		tag: "v#{options[:version]}"
+    	)
+      if UI.confirm("Do you want to push it?")
+      	push_to_git_remote
+      end
+    end
+  end	
+
+end
+

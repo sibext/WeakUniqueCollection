@@ -16,7 +16,8 @@
 - (void)removeObject:(ObjectType)object;
 - (void)removeAllObjects;
 
-- (ObjectType)objectAtIndexedSubscript:(NSUInteger)idx;
-- (void)setObject:(ObjectType)obj atIndexedSubscript:(NSUInteger)idx;
+- (ObjectType)anyObject;
+- (NSArray <ObjectType> *)allObjects;
+- (BOOL)member:(ObjectType)object;
 
 @end

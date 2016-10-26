@@ -22,7 +22,7 @@ describe(@"Collection", ^{
         TestObject *obj = [[TestObject alloc] initWithName:@"Object"];
         [collection addObject:obj];
         //TODO: use expecta's .contain after implementation of NSFastEnumeration
-        id firstObject = collection[0];
+        id firstObject = collection.anyObject;
         expect(firstObject).to.beIdenticalTo(obj);
     });
     
@@ -41,15 +41,17 @@ describe(@"Collection", ^{
         [collection addObject:obj1];
         TestObject *obj2 = [[TestObject alloc] initWithName:@"Object3"];
         [collection addObject:obj2];
-        id returnedObject = collection[1];
-        expect(returnedObject).to.beIdenticalTo(obj1);
+        NSArray *returnedObjects = collection.allObjects;
+        expect(returnedObjects).to.contain(obj0);
+        expect(returnedObjects).to.contain(obj1);
+        expect(returnedObjects).to.contain(obj2);
     });
     
     it(@"removes object", ^{
         TestObject *obj = [[TestObject alloc] initWithName:@"Anyone"];
         [collection addObject:obj];
-        id firstObject = collection[0];
-        expect(firstObject).to.beIdenticalTo(obj);
+        id anyObject = collection.anyObject;
+        expect(anyObject).to.beIdenticalTo(obj);
         [collection removeObject:obj];
         expect(collection).to.haveCountOf(0);
     });

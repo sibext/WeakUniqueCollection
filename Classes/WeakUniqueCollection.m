@@ -11,7 +11,7 @@
 @interface WeakUniqueCollection ()
 
 @property(nonatomic)dispatch_queue_t accessQueue;
-@property NSPointerArray *objectPointers;
+@property(nonatomic)NSHashTable *hashTable;
 
 @end
 
@@ -23,7 +23,7 @@
 {
     if (self = [super init]) {
         _accessQueue = dispatch_queue_create("WEAKUNIQUECOLLECTION_QUEUE", DISPATCH_QUEUE_CONCURRENT);
-        _objectPointers = [NSPointerArray weakObjectsPointerArray];
+        _hashTable = [NSHashTable hashTableWithOptions:NSPointerFunctionsWeakMemory];
     }
     return self;
 }
@@ -33,31 +33,21 @@
 - (void)addObject:(id)object
 {
     dispatch_barrier_async(_accessQueue, ^{
-        NSArray *allPointers = self.objectPointers.allObjects;
-        if (![allPointers containsObject:object]) {
-            [self.objectPointers addPointer:(__bridge void * _Nullable)(object)];
-        }
+            [self.hashTable addObject:object];
     });
 }
 
 - (void)removeObject:(id)object
 {
     dispatch_barrier_async(_accessQueue, ^{
-        NSArray *allPointers = self.objectPointers.allObjects;
-        NSUInteger index = [allPointers indexOfObjectIdenticalTo:object];
-        if (index != NSNotFound) {
-            [self.objectPointers removePointerAtIndex:index];
-        }
+        [self.hashTable removeObject:object];
     });
 }
 
 - (void)removeAllObjects
 {
     dispatch_barrier_async(_accessQueue, ^{
-        NSUInteger count = self.objectPointers.count;
-        for (NSUInteger i = 0; i < count; i++) {
-            [self.objectPointers removePointerAtIndex:0];
-        }
+        [self.hashTable removeAllObjects];
     });
 }
 
@@ -65,30 +55,36 @@
 {
     NSUInteger __block count = 0;
     dispatch_sync(_accessQueue, ^{
-        count = self.objectPointers.count;
+        count = self.hashTable.count;
     });
     return count;
 }
 
-#pragma mark - Subscription
-
-- (id)objectAtIndexedSubscript:(NSUInteger)idx
+- (id)anyObject
 {
     id __block obj;
     dispatch_sync(_accessQueue, ^{
-        obj = [self.objectPointers pointerAtIndex:idx];
+        obj = [self.hashTable anyObject];
     });
     return obj;
 }
 
-- (void)setObject:(id)obj atIndexedSubscript:(NSUInteger)idx
+- (NSArray *)allObjects
 {
-    dispatch_barrier_async(_accessQueue, ^{
-        NSArray *allPointers = self.objectPointers.allObjects;
-        if (![allPointers containsObject:obj]) {
-            [self.objectPointers insertPointer:(__bridge void * _Nullable)(obj) atIndex:idx];
-        }
+    NSArray *__block array;
+    dispatch_sync(_accessQueue, ^{
+        array = [self.hashTable allObjects];
     });
+    return array;
+}
+
+- (BOOL)member:(id)object
+{
+    BOOL __block isMember = NO;
+    dispatch_sync(_accessQueue, ^{
+        isMember = [self.hashTable member:object] != nil;
+    });
+    return isMember;
 }
 
 @end

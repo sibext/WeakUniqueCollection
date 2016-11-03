@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'WeakUniqueCollection'
-  s.version          = '0.2.0'
+  s.version          = '0.2.1'
   s.summary          = 'Objective-C collection class that stores weak references to the objects and maintains uniqueness and thread safety.'
   s.description      = 'WeakUniqueCollection class has behavior similar to NSMutableSet (in terms of uniqueness of objects inside it)' \
                        'but it stores weak references and thread-safe. It could be very useful for implementation of'\

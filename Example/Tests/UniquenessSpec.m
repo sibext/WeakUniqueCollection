@@ -6,28 +6,23 @@
 //  Copyright © 2016 Artyom Gladkov. All rights reserved.
 //
 #import <WeakUniqueCollection/WeakUniqueCollection-umbrella.h>
+#import "TestObject.h"
 
 SpecBegin(Uniqueness)
 
-xdescribe(@"Maintaining uniqueness", ^{
-    __block WeakUniqueCollection<NSNumber *> *collection;
-    __block NSNumber *object;
+describe(@"uniqueness maintaining", ^{
+    __block WeakUniqueCollection<TestObject *> *collection;
+    
     beforeAll(^{
         collection = [[WeakUniqueCollection alloc] init];
-        object = @(5);
     });
     
-    describe(@"on adding", ^{
-        beforeAll(^{
-            [collection addObject:object];
-        });
-        it(@"using addObject:", ^{
-            [collection addObject:object];
-            expect(collection).to.contain(object);
-        });
-    
+    it(@"on adding", ^{
+        TestObject *object = [[TestObject alloc] initWithName:@"Bob"];
+        [collection addObject:object];
+        [collection addObject:object];
+        expect(collection).to.haveCountOf(1);
     });
-
     
 });
 

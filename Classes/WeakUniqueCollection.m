@@ -55,7 +55,8 @@
 {
     NSUInteger __block count = 0;
     dispatch_sync(_accessQueue, ^{
-        count = self.hashTable.count;
+        NSArray *allObjects = [self.hashTable allObjects];
+        count = allObjects.count;
     });
     return count;
 }

@@ -15,13 +15,27 @@ describe(@"Collection", ^{
     WeakUniqueCollection<TestObject *> * __block collection;
     
     beforeEach(^{
-        collection = [[WeakUniqueCollection alloc]init];
+        collection = [[WeakUniqueCollection alloc] init];
+    });
+
+    it(@"zeroing references to the object", ^{
+        TestObject *object = [[TestObject alloc] initWithName:@"Object"];
+        [collection addObject:object];
+        object = nil;
+        expect(collection).to.haveCountOf(0);
+    });
+    
+    it(@"returns all objects after zeroing references",^{
+        TestObject *object = [[TestObject alloc] initWithName:@"Ojbect"];
+        [collection addObject:object];
+        object = nil;
+        NSArray *allObjects = [collection allObjects];
+        expect(allObjects).to.haveCountOf(0);
     });
     
     it(@"adds new object", ^{
         TestObject *obj = [[TestObject alloc] initWithName:@"Object"];
         [collection addObject:obj];
-        //TODO: use expecta's .contain after implementation of NSFastEnumeration
         id firstObject = collection.anyObject;
         expect(firstObject).to.beIdenticalTo(obj);
     });
@@ -58,9 +72,11 @@ describe(@"Collection", ^{
     
     it (@"removes all objects", ^{
         NSUInteger count = 5;
+        NSMutableArray *testObjects = [[NSMutableArray alloc] init];
         for (NSUInteger i = 0; i < count; i++) {
             NSString *name = [NSString stringWithFormat:@"Object %ld", (long)i];
             TestObject *obj = [[TestObject alloc] initWithName:name];
+            [testObjects addObject:obj];
             [collection addObject:obj];
         }
         expect(collection).to.haveCountOf(5);
